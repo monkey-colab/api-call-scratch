@@ -1,0 +1,32 @@
+application:
+  data-sources:
+    - type: "api"
+      name: "ex-qwa-dev"
+      url: "http://example.com"
+      headers:
+        Accept-Encoding: "gzip"
+
+      authentication:
+        type: "key"
+        key: "{secrets.key}"
+        query-param: "key"
+
+      storage:
+        type: "local"
+        path: "I:/"
+
+      requests:
+        url: "/questions/from={params.from}&to={params.to}"
+        headers:
+          Accept-Language: "en-US,en;q=0.5"
+        page:
+          size: 100
+          page-param: "page"
+          size-param: "size"
+        response:
+          type: "json"
+          filters:
+            - type: "root"
+              root: "@items"
+
+      store: "questions-{params.from}&to={params.to}"
